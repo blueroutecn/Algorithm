@@ -18,6 +18,7 @@ def checkfood(fdlist,cklist,foodidx,nfood,nfriend):
 
 
 
+
     ret = 99999
     cnt = 0
     for i in range(0,2):
