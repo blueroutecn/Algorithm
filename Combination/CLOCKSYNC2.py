@@ -1,4 +1,3 @@
-import math
 
 def moveclock(T,bt):
     for b in bt:
@@ -8,7 +7,7 @@ def moveclock(T,bt):
         elif T[b] == 0:
             T[b] = 12
 
-def synchclock(T,current):
+def synchclock(T,current,button):
     """
     1. 현재 버튼 누른다
     2. 0,1,2,3 번 눌러본다
@@ -23,6 +22,7 @@ def synchclock(T,current):
         for t in T:
             if t != 12:
                 flag = False
+
         if flag:
             return 0
         else:
@@ -30,8 +30,8 @@ def synchclock(T,current):
 
     ret = math.inf
     for cnt in range(0,4):
-        ret = min(ret, cnt + synchclock(T,current+1))
-        moveclock(T,current)
+        ret = min(ret, cnt + synchclock(T,current+1,button))
+        moveclock(T,button[current])
 
     return ret
 
@@ -54,16 +54,11 @@ n = int(f.readline())
 while idx < n:
     T = f.readline().split()
     T = list(map(int,T))
-    Ntry = [0]*10
-    cnt = 0
-    print('hh')
-    ret = synchclock(T,Ntry,cnt)
+    ret = synchclock(T,0,button)
     if ret == math.inf:
-        fw.write('{}'.format(-1))
+        fw.write('{} \n'.format(-1))
     else:
-        fw.write('{}'.format(ret))
-    fw.write('time {} \n'.format(T))
-    fw.write('=='*10 + '\n')
+        fw.write('{} \n'.format(ret))
     idx = idx + 1
 fw.close()
 f.close()
