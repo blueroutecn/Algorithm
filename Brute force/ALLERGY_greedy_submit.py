@@ -34,9 +34,6 @@ def checkfood(frdlist,cklist,nfood,nfriend):
             frdlist[i] = frdlist[i] - cklist[i][foodidx]
     return ret
 
-
-
-
 idx = 0
 n = int(rl())
 while idx < n:
