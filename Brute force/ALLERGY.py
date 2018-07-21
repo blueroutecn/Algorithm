@@ -69,7 +69,7 @@ while idx < n:
             cklist[pos[0]][i] = cklist[pos[0]][i] + 1
     for i in range(0,nfriend):
         fw.write('{} \n'.format(cklist[i]))
-    #print(cklist)
+    print(cklist)
 #    print(cklist[0:][5])
     frdlist = [0]*nfriend
     fdhistory = []

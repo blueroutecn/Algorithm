@@ -47,7 +47,7 @@ while idx < n:
         for j in tmp:
             pos = [idx for idx,item in enumerate(name) if item == j]
             cklist[pos[0]][i] = cklist[pos[0]][i] + 1
-
+    #print(cklist)
     frdlist = [0]*nfriend
     fdhistory = []
     ret = checkfood(frdlist,cklist,0,nfood,nfriend,fdhistory)
