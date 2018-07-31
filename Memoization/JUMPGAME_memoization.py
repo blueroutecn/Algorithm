@@ -1,5 +1,5 @@
 
-def runmap(mapinput,mapsize,x,y):
+def runmap(mapinput,mapsize,mapcheck,x,y):
 
     """
     0. mapsize 벗어나면 return -1
@@ -9,17 +9,19 @@ def runmap(mapinput,mapsize,x,y):
        - 아래로
     """
     if not (x >= 0 and x < mapsize and y >= 0 and y < mapsize):
-        return -1
+        return False
     if mapinput[x][y] == 0:
-        return 1
+        return True
+
+    if mapcheck[x][y]:
+        return mapcheck[x][y]
 
     cmov = mapinput[x][y]
-    a = runmap(mapinput,mapsize,x + cmov,y)
-    b = runmap(mapinput,mapsize,x,y + cmov)
-    if a == 1 or b == 1:
-        return 1
-    else:
-        return -1
+    mapcheck[x][y] = runmap(mapinput,mapsize,mapcheck,x + cmov,y) or \
+    runmap(mapinput,mapsize,mapcheck,x,y + cmov)
+
+    return mapcheck[x][y]
+
 
 import os
 cwd = os.getcwd()
@@ -38,10 +40,11 @@ while k < n:
         tmp = list(map(int,f.readline().split()))
         mapinput[kk] = tmp
         kk = kk + 1
-    a = runmap(mapinput,mapsize,0,0)
-    if a == 1:
+    mapcheck = [[False]*mapsize]*mapsize
+    isanswer = runmap(mapinput,mapsize,mapcheck,0,0)
+    if isanswer:
         print('YES')
-    elif a == -1:
+    else:
         print('NO')
     k = k + 1
 

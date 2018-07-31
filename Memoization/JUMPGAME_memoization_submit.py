@@ -1,18 +1,21 @@
 
-def runmap(mapinput,mapsize,x,y):
+def runmap(mapinput,mapsize,mapcheck,x,y):
 
     if not (x >= 0 and x < mapsize and y >= 0 and y < mapsize):
-        return -1
+        return False
     if mapinput[x][y] == 0:
-        return 1
+        return True
+
+    if mapcheck[x][y]:
+        return mapcheck[x][y]
 
     cmov = mapinput[x][y]
-    a = runmap(mapinput,mapsize,x + cmov,y)
-    b = runmap(mapinput,mapsize,x,y + cmov)
-    if a == 1 or b == 1:
-        return 1
-    else:
-        return -1
+    mapcheck[x][y] = runmap(mapinput,mapsize,mapcheck,x + cmov,y) or \
+    runmap(mapinput,mapsize,mapcheck,x,y + cmov)
+
+    return mapcheck[x][y]
+
+
 
 import sys
 
@@ -20,16 +23,16 @@ k = 0
 n = int(sys.stdin.readline())
 while k < n:
     mapsize = int(sys.stdin.readline().split()[0])
-
     kk = 0
     mapinput = [[0]*mapsize]*mapsize
     while kk < mapsize:
         tmp = list(map(int,sys.stdin.readline().split()))
         mapinput[kk] = tmp
         kk = kk + 1
-    a = runmap(mapinput,mapsize,0,0)
-    if a == 1:
+    mapcheck = [[False]*mapsize]*mapsize
+    isanswer = runmap(mapinput,mapsize,mapcheck,0,0)
+    if isanswer:
         print('YES')
-    elif a == -1:
+    else:
         print('NO')
     k = k + 1
