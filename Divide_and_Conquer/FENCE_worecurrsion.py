@@ -12,30 +12,8 @@ def checkfence(f0,f1,nfence,fencelen):
     if f0 == f1:
         return fencelen[f0]
     elif f0<f1:
-        div = int((f1 + f0)/2)
 
-        m1 = checkfence(f0,div,nfence,fencelen)
-        m2 = checkfence(div+1,f1,nfence,fencelen)
-
-        if m1<m2:
-            maxarea = m2
-        else:
-            maxarea = m1
-
-        i = div
-        j = div+1
-
-        while i>=f0 and j <= f1:
-            mtmp = min(fencelen[i:j+1])*(j-i+1) # i, ... , j-1
-            if maxarea<mtmp:
-                maxarea = mtmp
-            if i-1<f0 or j+1>f1:
-                break
-            if fencelen[i-1] > fencelen[j+1]:
-                i = i - 1
-            elif fencelen[i-1] <= fencelen[j+1]:
-                j = j + 1
-        return maxarea
+        return 0
 
 from os import chdir  # 작업 위치를 바꾸기 위한 헤드
 chdir('D:\[3] BMI\[2] northwestern\[6] CNN_pytorch\Algorithm') # 작업 위치 변경
