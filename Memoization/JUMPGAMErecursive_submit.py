@@ -23,10 +23,10 @@ while k < n:
 
     kk = 0
     mapinput = [[0]*mapsize]*mapsize
-    while kk < mapsize:
+    for kk in range(0,mapsize):
         tmp = list(map(int,sys.stdin.readline().split()))
         mapinput[kk] = tmp
-        kk = kk + 1
+
     a = runmap(mapinput,mapsize,0,0)
     if a == 1:
         print('YES')

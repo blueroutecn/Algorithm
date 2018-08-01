@@ -1,38 +1,52 @@
 
-def runmap(mapinput,mapsize,mapcheck,x,y):
 
-    if not (x >= 0 and x < mapsize and y >= 0 and y < mapsize):
+
+
+import sys
+
+mapinput = [[0]*100 for x in range(100)]
+mapcheck = [[False]*100 for x in range(100)]
+mapsize = 0
+
+
+def runmap(x,y):
+
+    if (x >= mapsize) or (y >= mapsize):
         return False
-    if mapinput[x][y] == 0:
+    if x == (mapsize - 1) and y == (mapsize - 1):
         return True
 
     if mapcheck[x][y]:
         return mapcheck[x][y]
 
     cmov = mapinput[x][y]
-    mapcheck[x][y] = runmap(mapinput,mapsize,mapcheck,x + cmov,y) or \
-    runmap(mapinput,mapsize,mapcheck,x,y + cmov)
+    mapcheck[x][y] = runmap(x + cmov,y) or runmap(x,y + cmov)
 
     return mapcheck[x][y]
 
 
 
-import sys
-
-k = 0
 n = int(sys.stdin.readline())
-while k < n:
+
+for k in range(0,n):
+
+
     mapsize = int(sys.stdin.readline().split()[0])
-    kk = 0
-    mapinput = [[0]*mapsize]*mapsize
-    while kk < mapsize:
+
+
+    for kk in range(0,mapsize):
         tmp = list(map(int,sys.stdin.readline().split()))
-        mapinput[kk] = tmp
-        kk = kk + 1
-    mapcheck = [[False]*mapsize]*mapsize
-    isanswer = runmap(mapinput,mapsize,mapcheck,0,0)
+        mapinput[kk][0:len(tmp)] = tmp
+
+
+    isanswer = runmap(0,0)
+
     if isanswer:
-        print('YES')
+        sys.stdout.write('YES' + '\n')
     else:
-        print('NO')
-    k = k + 1
+        sys.stdout.write('NO' + '\n')
+
+
+
+    for i in range(0,mapsize):
+        mapcheck[i][0:mapsize] = [False]*mapsize

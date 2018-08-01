@@ -1,14 +1,15 @@
 
-def runmap(mapinput,mapsize,mapcheck,x,y):
+import os
+cwd = os.getcwd()
 
-    """
-    0. mapsize 벗어나면 return -1
-    1. 끝점 (0) 을 만나면 종료
-    2. 종료되지 않았다면, 재귀
-       - 오른쪽으로
-       - 아래로
-    """
-    if not (x >= 0 and x < mapsize and y >= 0 and y < mapsize):
+
+mapinput = [[0]*100 for x in range(100)]
+mapcheck = [[False]*100 for x in range(100)]
+mapsize = 0
+
+def runmap(x,y):
+
+    if (x >= mapsize) or (y >= mapsize):
         return False
     if mapinput[x][y] == 0:
         return True
@@ -17,35 +18,38 @@ def runmap(mapinput,mapsize,mapcheck,x,y):
         return mapcheck[x][y]
 
     cmov = mapinput[x][y]
-    mapcheck[x][y] = runmap(mapinput,mapsize,mapcheck,x + cmov,y) or \
-    runmap(mapinput,mapsize,mapcheck,x,y + cmov)
+    mapcheck[x][y] = runmap(x + cmov,y) or runmap(x,y + cmov)
 
     return mapcheck[x][y]
 
 
-import os
-cwd = os.getcwd()
 
 f = open('.\Memoization\JUMPGAME.txt', 'r')
 fw = open('.\Memoization\JUMPGAME_answer.txt', 'w')
 
-k = 0
+
 n = int(f.readline())
-while k < n:
+for k in range(0,n):
+
+
     mapsize = int(f.readline().split()[0])
-    print(mapsize)
-    kk = 0
-    mapinput = [[0]*mapsize]*mapsize
-    while kk < mapsize:
+
+    for kk in range(0,mapsize):
         tmp = list(map(int,f.readline().split()))
-        mapinput[kk] = tmp
-        kk = kk + 1
-    mapcheck = [[False]*mapsize]*mapsize
-    isanswer = runmap(mapinput,mapsize,mapcheck,0,0)
+        mapinput[kk][0:len(tmp)] = tmp
+        
+    isanswer = runmap(0,0)
     if isanswer:
         print('YES')
     else:
         print('NO')
+
+
+
+    for i in range(0,mapsize):
+        mapcheck[i][0:mapsize] = [False]*mapsize
+
+
     k = k + 1
 
 fw.close()
