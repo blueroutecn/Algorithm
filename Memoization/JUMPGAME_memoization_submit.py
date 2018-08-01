@@ -5,18 +5,18 @@
 import sys
 
 mapinput = [[0]*100 for x in range(100)]
-mapcheck = [[False]*100 for x in range(100)]
+mapcheck = [[-1]*100 for x in range(100)]
 mapsize = 0
 
 
 def runmap(x,y):
 
     if (x >= mapsize) or (y >= mapsize):
-        return False
+        return 0
     if x == (mapsize - 1) and y == (mapsize - 1):
-        return True
+        return 1
 
-    if mapcheck[x][y]:
+    if mapcheck[x][y] != -1:
         return mapcheck[x][y]
 
     cmov = mapinput[x][y]
@@ -49,4 +49,4 @@ for k in range(0,n):
 
 
     for i in range(0,mapsize):
-        mapcheck[i][0:mapsize] = [False]*mapsize
+        mapcheck[i][0:mapsize] = [-1]*mapsize

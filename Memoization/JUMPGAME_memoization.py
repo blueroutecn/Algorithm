@@ -4,17 +4,17 @@ cwd = os.getcwd()
 
 
 mapinput = [[0]*100 for x in range(100)]
-mapcheck = [[False]*100 for x in range(100)]
+mapcheck = [[-1]*100 for x in range(100)]
 mapsize = 0
 
 def runmap(x,y):
 
     if (x >= mapsize) or (y >= mapsize):
-        return False
+        return 0
     if mapinput[x][y] == 0:
-        return True
+        return 1
 
-    if mapcheck[x][y]:
+    if mapcheck[x][y] != -1:
         return mapcheck[x][y]
 
     cmov = mapinput[x][y]
@@ -37,7 +37,7 @@ for k in range(0,n):
     for kk in range(0,mapsize):
         tmp = list(map(int,f.readline().split()))
         mapinput[kk][0:len(tmp)] = tmp
-        
+
     isanswer = runmap(0,0)
     if isanswer:
         print('YES')
