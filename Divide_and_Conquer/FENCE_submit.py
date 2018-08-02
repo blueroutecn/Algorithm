@@ -1,14 +1,11 @@
-
-
 def checkfence(f0,f1,nfence,fencelen):
-
     if f0 == f1:
         return fencelen[f0]
     elif f0<f1:
         div = int((f1 + f0)/2)
+
         m1 = checkfence(f0,div,nfence,fencelen)
         m2 = checkfence(div+1,f1,nfence,fencelen)
-
 
         if m1<m2:
             maxarea = m2
@@ -17,16 +14,24 @@ def checkfence(f0,f1,nfence,fencelen):
 
         i = div
         j = div+1
-
-        while i>=f0 and j <= f1:
-            mtmp = min(fencelen[i:j+1])*(j-i+1) # i, ... , j-1
-            if maxarea<mtmp:
-                maxarea = mtmp
-            if i-1<f0 or j+1>f1:
-                break
-            if fencelen[i-1] > fencelen[j+1]:
+        height = min(fencelen[i],fencelen[j])
+        while i>=f0 or j <= f1:
+            if i>=f0 and j<=f1:
+                if fencelen[i] < fencelen[j]:
+                    height = min(fencelen[j],height)
+                    maxarea = max(maxarea,height*(j - i))
+                    j = j + 1
+                else:
+                    height = min(fencelen[i],height)
+                    maxarea = max(maxarea,height*(j - i))
+                    i = i - 1
+            elif j>f1:
+                height = min(fencelen[i],height)
+                maxarea = max(maxarea,height*(j - i))
                 i = i - 1
-            elif fencelen[i-1] <= fencelen[j+1]:
+            elif i<f0:
+                height = min(fencelen[j],height)
+                maxarea = max(maxarea,height*(j - i))
                 j = j + 1
 
         return maxarea
