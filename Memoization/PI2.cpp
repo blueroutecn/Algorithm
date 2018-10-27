@@ -7,19 +7,19 @@
 using namespace std;
 
 
-int arr[10000] = {-1};
+int arr[10005] = {-1};
 
-int cache[10000] = {0};
-
+int cache[10005] = {-1};
+int darr[10005] = {0};
 int num_len = 0;
 
 
 int cost(int idx,int len){
 
-  int darr[len-1] = {0};
+
 
   for(int i = idx;i<idx+len-1;i++){
-    darr[i] = arr[i+1] - arr[i];
+    darr[i - idx] = arr[i+1] - arr[i];
   }
 
   bool flag = true;
@@ -68,7 +68,6 @@ int cost(int idx,int len){
   if(flag)
     return 4;
 
-  //cout<<"I am here"<<endl;
   flag = false;
   if(len == 3){
     if(darr[0] == darr[1]){
@@ -76,10 +75,8 @@ int cost(int idx,int len){
     }
   }
   else if(len == 4){
-    //cout<<"I am here2"<<endl;
     if((darr[0] == darr[1]) &&(darr[1]  == darr[2])){
       flag = true;
-      //cout<<"I am here3"<<endl;
     }
   }
   else if(len == 5){
@@ -90,25 +87,18 @@ int cost(int idx,int len){
   if(flag)
     return 5;
 
-  //cout<<"I am here4"<<endl;
   return 10;
 
-
-  // for(int i = idx;i<idx+len-1;i++){
-  //   cout<<darr[i]<<" ";
-  // }
-  // cout<<endl;
 
 }
 
 int pi(int idx){
 
-  //cout<<"cost: "<<cost(idx,4)<<endl;
 
   int& ret = cache[idx];
 
-  if((idx==(num_len-2)) || (idx == (num_len - 1))){
-    ret = std::numeric_limits<int>::max();
+  if((idx==(num_len-2)) || (idx == (num_len - 1)) || (idx > num_len)){
+    ret = 987654321;
     return ret;
   }
   else if(idx == num_len){
@@ -116,15 +106,19 @@ int pi(int idx){
     return ret;
   }
 
-  if(ret!=0)
+  // if(idx == num_len)
+  //   return 0;
+
+  //int& ret = cache[idx];
+  if(ret!=-1){
     return ret;
-
-
-
-  ret = std::numeric_limits<int>::max();
+  }
+  ret = 987654321;
   for(int L = 3;L<6;L++){
-    if(idx+L-1<num_len)
+    if(idx+L-1<num_len){
+
       ret = min(ret,cost(idx,L) + pi(idx+L));
+    }
   }
 
   return ret;
@@ -142,6 +136,10 @@ int main(){
 
   cin>>n;
   while(n>0){
+
+    memset(arr,-1,sizeof(arr));
+    memset(cache,-1,sizeof(cache));
+    memset(darr,0,sizeof(darr));
     cin>>num;
 
     k = 1;
@@ -159,12 +157,11 @@ int main(){
       idx2++;
     }
 
-    for(int i = 0;i<num_len;i++)
-      cout<<arr[i]<<" ";
-    cout<<endl;
-    cout<<"ans: "<<pi(0)<<endl;
 
-    memset(cache,0,sizeof(cache));
+
+    cout<<pi(0)<<endl;
+
+
 
     n--;
   }
