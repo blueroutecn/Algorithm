@@ -2,7 +2,7 @@
 #include <string>
 #include <math.h>       /* pow */
 #include <limits>
-
+#include <string.h>
 
 using namespace std;
 
@@ -106,28 +106,28 @@ int pi(int idx){
   //cout<<"cost: "<<cost(idx,4)<<endl;
 
   int& ret = cache[idx];
-  if(ret!=0)
-    return ret;
 
-  if(idx+2>=num_len){
+  if((idx==(num_len-2)) || (idx == (num_len - 1))){
+    ret = std::numeric_limits<int>::max();
+    return ret;
+  }
+  else if(idx == num_len){
     ret = 0;
     return ret;
   }
 
-  int c1 = std::numeric_limits<int>::max();
-  int c2 = std::numeric_limits<int>::max();
-  int c3 = std::numeric_limits<int>::max();
+  if(ret!=0)
+    return ret;
 
-  if(idx+2<num_len)
-    c1 = cost(idx,3) + pi(idx+3);
-  if(idx+3<num_len)
-    c2 = cost(idx,4) + pi(idx+4);
-  if(idx+4<num_len)
-    c3 = cost(idx,5) + pi(idx+5);
-  ret = min(min(c1,c2),c3);
+
+
+  ret = std::numeric_limits<int>::max();
+  for(int L = 3;L<6;L++){
+    if(idx+L-1<num_len)
+      ret = min(ret,cost(idx,L) + pi(idx+L));
+  }
 
   return ret;
-
 
 }
 
@@ -164,6 +164,7 @@ int main(){
     cout<<endl;
     cout<<"ans: "<<pi(0)<<endl;
 
+    memset(cache,0,sizeof(cache));
 
     n--;
   }
