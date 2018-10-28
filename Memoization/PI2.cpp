@@ -106,10 +106,7 @@ int pi(int idx){
     return ret;
   }
 
-  // if(idx == num_len)
-  //   return 0;
 
-  //int& ret = cache[idx];
   if(ret!=-1){
     return ret;
   }
