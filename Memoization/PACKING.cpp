@@ -26,16 +26,24 @@ int search(int head,int start,int wadd){
   int best = carr[start];
   int nextbest = -1;
   for(int i = start + 1;i<n;i++){
+    cout<<"now: "<<fname[start]<<" try add: "<<fname[i]<<endl;
     int tmp = carr[start] + search(head,i,wadd);
     if(tmp>best){
       best = tmp;
       nextbest = i;
     }
   }
+
+
   bestcache[head][start] = nextbest;
-  cout<<"fname: "<<fname[start]<<" "<<nextbest<<endl;
+  if(nextbest!= -1)
+    cout<<"head: "<<head<<"fname: "<<fname[start]<<" "<<fname[nextbest]<<endl;
+  else
+    cout<<"head: "<<head<<"fname: "<<fname[start]<<" "<<nextbest<<endl;
   return best;
+
 }
+
 
 void reconstruct(int head,int start,vector<int>& idxset){
 
@@ -44,6 +52,7 @@ void reconstruct(int head,int start,vector<int>& idxset){
     int next = bestcache[head][start];
     reconstruct(head,next,idxset);
   }
+
 }
 
 
@@ -59,12 +68,14 @@ int main(){
     {
       memset(&bestcache[i],-1,sizeof(int)*100);
     }
+
     cin>>n>>w;
     for(int i = 0;i<n;i++){
       cin>>fname[i];
       cin>>warr[i];
       cin>>carr[i];
     }
+
 
     // cout<<n<<" "<<w<<endl;
     // for(int i = 0;i<n;i++){
