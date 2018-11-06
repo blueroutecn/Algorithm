@@ -7,7 +7,7 @@ using namespace std;
 
 
 int map[50][50];
-double cache[50][51];
+double cache[50][101];
 double deg[50];
 
 double search(vector<int>& path,int n,int d,int t){
@@ -69,7 +69,7 @@ int main(){
 
     for(int i = 0;i<50;i++)
       memset(&map[i],0,sizeof(int)*50);
-    fill(&cache[0][0],&cache[49][51],-1);
+    fill(&cache[0][0],&cache[49][101],-1);
 
     memset(target,0,sizeof(target));
     memset(deg,0,sizeof(deg));
@@ -126,7 +126,7 @@ int main(){
       cout<<search(path,n, d, target[i]);
       if(i!=t-1)
         cout<<" ";
-      fill(&cache[0][0],&cache[49][51],-1);
+      fill(&cache[0][0],&cache[49][101],-1);
     }
     cout<<endl;
 
@@ -137,7 +137,6 @@ int main(){
 
     ncase--;
   }
-
 
 
 }
