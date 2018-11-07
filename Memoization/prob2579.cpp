@@ -22,8 +22,11 @@ int step(int start,int prevstep){
   }
 
   int ans = 0;
-  if(start==0 || start == 1){
+  if(start==0 ){
     ans = max(step(start+1,1),step(start+2,2));
+  }
+  else if(start == 1){
+    ans = score[start] + max(step(start+1,1),step(start+2,2));
   }
   else if(prevstep == 1){
     ans = score[start] + step(start+2,2);
@@ -49,5 +52,5 @@ int main(){
   for(int i = 0;i<nstep;i++)
     cin>>score[i+1];
 
-  cout<<"answer: "<<step(0,0)<<endl;
+  cout<<step(0,0)<<endl;
 }
