@@ -7,43 +7,48 @@ using namespace std;
 
 int nstep;
 
-int cache[3][302];
+int cache[2][302];
 int score[301];
 
 
 int step(int start,int prevstep){
 
+  int& ret = cache[prevstep-1][start];
+
+  if(ret!=-1){
+    return ret;
+  }
+
   if(start>nstep){
-    return -300*100000;
+    ret = -300*100000;
+    return ret;
   }
 
   if(start == nstep){
-    return score[start];
+    ret = score[start];
+    return ret;
   }
 
   int ans = 0;
-  if(start==0 ){
-    ans = max(step(start+1,1),step(start+2,2));
-  }
-  else if(start == 1){
-    ans = score[start] + max(step(start+1,1),step(start+2,2));
+  if(start==0 ||start == 1){
+    ret = score[start] + max(step(start+1,1),step(start+2,2));
   }
   else if(prevstep == 1){
-    ans = score[start] + step(start+2,2);
+    ret = score[start] + step(start+2,2);
   }
   else if(prevstep == 2){
-    ans = score[start] + max(step(start+1,1),step(start+2,2));
+    ret = score[start] + max(step(start+1,1),step(start+2,2));
   }
 
-  return ans;
+  return ret;
 
 }
 
 int main(){
 
   nstep = 0;
-  memset(score,-1,sizeof(int)*300);
-  for(int i = 0;i<4;i++){
+  memset(score,0,sizeof(int)*300);
+  for(int i = 0;i<2;i++){
     memset(&cache[i],-1,sizeof(int)*302);
   }
 
@@ -52,5 +57,5 @@ int main(){
   for(int i = 0;i<nstep;i++)
     cin>>score[i+1];
 
-  cout<<step(0,0)<<endl;
+  cout<<step(0,1)<<endl;
 }
