@@ -111,46 +111,6 @@ void solve(int nleft, int mleft,int depth,int kmin){
 
 }
 
-//
-//
-// void solve(int nleft, int mleft,int depth,int kmin){
-//
-//   if(currentk>k)
-//     return;
-//
-//   if(nleft == 0 && mleft == 0){
-//     currentk++;
-//     if(currentk == k)
-//       printarr(arr);
-//   }
-//   else if(nleft!=0){
-//
-//     int tmp = fact(nleft,mleft);
-//     if(k<tmp){
-//       nleft--;
-//       arr[depth] = 0;
-//       solve(nleft,mleft,depth+1);
-//       nleft++;
-//     }
-//
-//
-//     if(mleft>0){
-//       mleft--;
-//       arr[depth] = 1;
-//       solve(nleft,mleft,depth+1);
-//       mleft++;
-//     }
-//   }
-//   else{
-//     mleft--;
-//     arr[depth] = 1;
-//     solve(nleft,mleft,depth+1);
-//     mleft++;
-//   }
-//
-// }
-
-
 int main(){
 
   cin>>ncases;
