@@ -15,7 +15,7 @@ int bestcache[100][100];
 string fname[100];
 
 
-int search(int head,int start,int wadd){
+int search(int start,int wadd){
 
   wadd += warr[start];
   if(wadd>w){
@@ -30,31 +30,19 @@ int search(int head,int start,int wadd){
     int tmp = carr[start] + search(head,i,wadd);
     if(tmp>best){
       best = tmp;
-      nextbest = i;
+    //  nextbest = i;
     }
   }
 
 
-  bestcache[head][start] = nextbest;
-  if(nextbest!= -1)
-    cout<<"head: "<<head<<"fname: "<<fname[start]<<" "<<fname[nextbest]<<endl;
-  else
-    cout<<"head: "<<head<<"fname: "<<fname[start]<<" "<<nextbest<<endl;
+  //bestcache[head][start] = nextbest;
+  // if(nextbest!= -1)
+  //   cout<<"head: "<<head<<"fname: "<<fname[start]<<" "<<fname[nextbest]<<endl;
+  // else
+  //   cout<<"head: "<<head<<"fname: "<<fname[start]<<" "<<nextbest<<endl;
   return best;
 
 }
-
-
-void reconstruct(int head,int start,vector<int>& idxset){
-
-  if(start !=-1){
-    idxset.push_back(start);
-    int next = bestcache[head][start];
-    reconstruct(head,next,idxset);
-  }
-
-}
-
 
 int main(){
 
@@ -89,7 +77,7 @@ int main(){
     int ans = 0;
     int start = 0;
     for(int i = 0;i<n;i++){
-      int tmp = search(i,i,0);
+      int tmp = search(i,0);
       if(ans<tmp){
         ans = tmp;
         start = i;
@@ -99,7 +87,7 @@ int main(){
     vector<int> idxset;
     reconstruct(start,start,idxset);
 
-    cout<<"answer: "<<ans<<" "<<idxset.size()<<endl;
+    // cout<<"answer: "<<ans<<" "<<idxset.size()<<endl;
     for(int i = 0;i<idxset.size();i++){
       cout<<"idx: "<<idxset[i]<<endl;
       cout<<fname[idxset[i]]<<" "<<carr[idxset[i]]<<" "<<warr[idxset[i]]<<endl;
