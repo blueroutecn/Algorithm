@@ -21,6 +21,14 @@ void dfs(int node){
   }
 }
 
+void dfs(int node){
+
+// dfs 인접행렬로 구현하기
+// dfs , bfs 시간복잡도, 공간복잡도
+// 연결 노드 개수 찾기 ?? (강의 따라하기)
+
+}
+
 
 void bfs(int node){
 
